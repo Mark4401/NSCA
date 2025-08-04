@@ -9,9 +9,14 @@ set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
 
-# 🟨 Global build output directory
-set(GLOBAL_OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Builds)
+# Global build output directory
+# set(GLOBAL_OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Builds)
 
+# define a global root for all binary outputs
+set(GLOBAL_OUTPUT_DIR "${CMAKE_BINARY_DIR}/bin")
+
+# include the functions file
+include(cmake/build_tool.cmake)
+
+# Add subdirectory for Fundamentals app
 add_subdirectory(CodeBase/Fundamentals)
-
-

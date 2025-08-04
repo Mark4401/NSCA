@@ -1,7 +1,6 @@
 #include"Global_Header.h"
 
-// using namespace std;
-
+using namespace std;
 using namespace DirectX;
 
 // Globals

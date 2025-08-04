@@ -1,45 +1,16 @@
-# Source and headers
-set(SRC
+# declare your sources and headers
+set(APP_SRCS
     "${CMAKE_CURRENT_SOURCE_DIR}/Src/AppEntry.cpp"
 )
-set(HDR
+set(APP_HDRS
     "${CMAKE_CURRENT_SOURCE_DIR}/Include/Global_Header.h"
 )
 
-# Output directory for binaries
-set(OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Builds/Fundamentals/$<CONFIG>")
-
-# Add executable with WIN32 subsystem (change to remove WIN32 if console app)
-add_executable(Fundamentals WIN32 ${SRC} ${HDR})
-
-# Include directories
-target_include_directories(Fundamentals PRIVATE
-    "${CMAKE_CURRENT_SOURCE_DIR}/Include"
-)
-
-# Compile definitions (Windows Unicode)
-target_compile_definitions(Fundamentals PRIVATE UNICODE _UNICODE)
-
-# Compiler options for UTF-8 source encoding
-target_compile_options(Fundamentals PRIVATE
-    $<$<CXX_COMPILER_ID:MSVC>:/utf-8>
-    $<$<CXX_COMPILER_ID:GNU>:-finput-charset=UTF-8 -fexec-charset=UTF-8>
-    $<$<CXX_COMPILER_ID:Clang>:-finput-charset=UTF-8 -fexec-charset=UTF-8>
-)
-
-# Link system libraries (Windows .lib names, no quotes needed)
-target_link_libraries(Fundamentals PRIVATE
-    d3d11
-    dxgi
-    d3dcompiler
-    ws2_32
-    dwmapi
-    xaudio2
-)
-
-# Set output directories
-set_target_properties(Fundamentals PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIR}
-    LIBRARY_OUTPUT_DIRECTORY ${OUTPUT_DIR}
-    RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIR}
+# call the function
+build_tool(Fundamentals
+    OUTPUT_DIR   Fundamentals         # sub-folder under GLOBAL_OUTPUT_DIR
+    SOURCES      "${APP_SRCS}"
+    HEADERS      "${APP_HDRS}"
+    LINK_LIBS    d3d11 dxgi d3dcompiler ws2_32 dwmapi xaudio2
+    WIN32        ON                   # produces a Win32 GUI exe
 )
