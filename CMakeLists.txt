@@ -13,7 +13,7 @@ set(CMAKE_C_EXTENSIONS OFF)
 # set(GLOBAL_OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Builds)
 
 # define a global root for all binary outputs
-set(GLOBAL_OUTPUT_DIR "${CMAKE_BINARY_DIR}/bin")
+set(GLOBAL_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Builds")
 
 # include the functions file
 include(cmake/build_tool.cmake)
