@@ -24,11 +24,24 @@ MainWindowProc(HWND Window, UINT Message, WPARAM WParam, LPARAM LParam)
 
 			PostQuitMessage(0);
 
-			break;
+			return 0;
 		}
+		case WM_PAINT:
+		{
+			// Window painting at resize 
+			PAINTSTRUCT ps;
+			HDC hdc = BeginPaint(Window, &ps);
+
+			// All painting occurs here, between BeginPaint and EndPaint.
+
+			FillRect(hdc, &ps.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
+
+			EndPaint(Window, &ps);
+		}
+		return 0;
 	}
 
-	return (Window, Message, WParam, LParam);
+	return DefWindowProcW(Window, Message, WParam, LParam);
 }
 
 int WINAPI
@@ -41,38 +54,53 @@ wWinMain(HINSTANCE hCurrentInstance, HINSTANCE hPrevInstance, PWSTR pCommandLine
 	PrimaryCLASS.hInstance = hCurrentInstance;
 	PrimaryCLASS.lpszClassName = L"Learning DirectX 11";
 
-	if ( !RegisterClass(&PrimaryCLASS) )
+	if ( RegisterClassW(&PrimaryCLASS) )
 	{
 		HWND PrimaryWindow_Handle = CreateWindowExW(
 			0,
 			PrimaryCLASS.lpszClassName,
 			L"My DirectX Window",
 			WS_OVERLAPPEDWINDOW | WS_VISIBLE,
-			CW_USEDEFAULT, CW_USEDEFAULT,
-			1280, 720,
+			0, 0,
+			580, 720,
 			NULL, NULL, hCurrentInstance, NULL
 		);
 
-		EnableDarkTitleBar( PrimaryWindow_Handle );
+		/*		NOTE!!!
+				
+				If making the title bar Black doesn't suet your taste. just replace:
+
+				- EnableDarkTitleBar( PrimaryWindow_Handle, nCmdShow ); 
+				
+				function with 
+
+				- ShowWindow(PrimaryWindow_Handle, nCmdShow);
+		*/
+		
+		EnableDarkTitleBar(PrimaryWindow_Handle);
+		//ShowWindow(PrimaryWindow_Handle, nCmdShow);
 
 		if ( PrimaryWindow_Handle )
 		{
 			while ( Running )
 			{
-				MSG MessageLoop;
+				MSG MessageLoop = { };
 
 				while ( PeekMessageW(&MessageLoop, 0, 0, 0, PM_REMOVE) )
 				{
 					if (MessageLoop.message == WM_QUIT)
 					{
 						Running = false;
+						break;
 					}
+
+					TranslateMessage(&MessageLoop); // Keyboard message
+					DispatchMessageW(&MessageLoop); // Window Handle 
 				}
 
-				TranslateMessage(&MessageLoop); // Keyboard message
-				DispatchMessageW(&MessageLoop); // Window Handle 
 			}
 		}
 	}
+
 	return 0;
 }
