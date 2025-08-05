@@ -25,9 +25,6 @@
 #include <d3d11.h>         // Main Direct3D 11 API
 #include <dxgi.h>          // DXGI (swap chain, adapters)
 #include <d3dcompiler.h>   // Shader compilation (optional, needed if compiling HLSL at runtime)
-#include <windows.h>
-#include <d3d11.h>
-#include <d3dcompiler.h>  // For shader compilation
 #include <DirectXMath.h>  // Optional, but handy for math
 
 #pragma comment(lib, "d3d11.lib")
