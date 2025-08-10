@@ -7,10 +7,10 @@ set(APP_HDRS
 )
 
 # call the function
-build_tool(Window_Setup
-    OUTPUT_DIR   Fundamentals         # sub-folder under GLOBAL_OUTPUT_DIR
+build_tool(Window_Setup_template
+    OUTPUT_DIR   App         # sub-folder under GLOBAL_OUTPUT_DIR
     SOURCES      "${APP_SRCS}"
     HEADERS      "${APP_HDRS}"
-    LINK_LIBS    d3d11 dxgi d3dcompiler ws2_32 dwmapi xaudio2
+    LINK_LIBS    ws2_32 
     WIN32        ON                   # produces a Win32 GUI exe
 )

@@ -1,17 +1,9 @@
 #include"Global_Header.h"
+//#include"DX11"
 
 using namespace std;
 
 bool Running = true;
-
-void EnableDarkTitleBar(HWND Window_handle)
-{
-	// NOTE(ME): This Enables the title bar to be fully black and better on the eyes
-	BOOL dark_mode = true;
-	DwmSetWindowAttribute(Window_handle, DWMWA_USE_IMMERSIVE_DARK_MODE, &dark_mode, sizeof(dark_mode));
-	ShowWindow(Window_handle, SW_HIDE);
-	ShowWindow(Window_handle, SW_SHOW);
-}
 
 LRESULT CALLBACK
 MainWindowProc(HWND Window, UINT Message, WPARAM WParam, LPARAM LParam)
@@ -77,7 +69,9 @@ wWinMain(HINSTANCE hCurrentInstance, HINSTANCE hPrevInstance, PWSTR pCommandLine
 				- ShowWindow(PrimaryWindow_Handle, nCmdShow);
 		*/
 		
-		EnableDarkTitleBar(PrimaryWindow_Handle);
+		//BlackTitleBar(PrimaryWindow_Handle);
+
+		//EnableDarkTitleBar(PrimaryWindow_Handle);
 		//ShowWindow(PrimaryWindow_Handle, nCmdShow);
 
 		if ( PrimaryWindow_Handle )

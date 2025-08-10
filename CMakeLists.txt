@@ -17,6 +17,9 @@ set(GLOBAL_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Builds")
 
 # include the functions file
 include(cmake/build_tool.cmake)
+include(cmake/lib_build_Script.cmake)
 
-# Add subdirectory for Fundamentals app
-add_subdirectory(CodeBase/Fundamentals)
+# Add subdirectory app
+add_subdirectory(CodeBase/App)
+add_subdirectory(CodeBase/DX11_Library)
+

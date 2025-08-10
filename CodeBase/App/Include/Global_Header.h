@@ -1,5 +1,5 @@
-#ifndef APP_ENTRY_H
-#define APP_ENTRY_H
+#ifndef GLOBAL_H
+#define GLOBAL_H
 
 // Winsock Library tools 
 #ifndef WIN32_LEAN_AND_MEAN
@@ -21,15 +21,7 @@
 #include <minwinbase.h>
 #include <libloaderapi.h>
 #include <xinput.h>
-#include <dwmapi.h>
-#include <d3d11.h>         // Main Direct3D 11 API
-#include <dxgi.h>          // DXGI (swap chain, adapters)
-#include <d3dcompiler.h>   // Shader compilation (optional, needed if compiling HLSL at runtime)
-#include <DirectXMath.h>  // Optional, but handy for math
 
-#pragma comment(lib, "d3d11.lib")
-#pragma comment(lib, "dxgi.lib")
-#pragma comment(lib, "d3dcompiler.lib")
 
 //////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////
@@ -50,9 +42,20 @@
 */
 
 // Enable Unicode for Win32 API
+
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+
+// My own Libraries or other binaries 
+
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+
+//#pragma comment(lib, "DX11_Library.lib")
+
 #ifndef UNICODE
 #define UNICODE
 #endif 
 
 
-#endif // !APP_ENTRY_H
+#endif // !GLOBAL_H

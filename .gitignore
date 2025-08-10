@@ -10,6 +10,8 @@
 *.userosscache
 *.sln.docstates
 
+/Notes/
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
@@ -32,6 +34,7 @@ bld/
 [Oo]ut/
 [Ll]og/
 [Ll]ogs/
+
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
@@ -97,6 +100,10 @@ StyleCopReport.xml
 *.pidb
 *.svclog
 *.scc
+*.lib
+*.exp
+*.dll
+*.exe
 
 # Chutzpah Test files
 _Chutzpah*
