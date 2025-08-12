@@ -9,15 +9,17 @@ set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
 
-# Global build output directory
-# set(GLOBAL_OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Builds)
-
 # define a global root for all binary outputs
 set(GLOBAL_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Builds")
+
+# Set path to DX11 library
+set(DX11UTILS_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/Library_builds/DX11-Version-0-1")
 
 # include the functions file
 include(cmake/build_tool.cmake)
 include(cmake/lib_build_Script.cmake)
+include(cmake/DX11UtilsConfig.cmake)
+
 
 # Add subdirectory app
 add_subdirectory(CodeBase/App)

@@ -1,5 +1,5 @@
 #include"Global_Header.h"
-//#include"DX11"
+
 
 using namespace std;
 
@@ -54,25 +54,11 @@ wWinMain(HINSTANCE hCurrentInstance, HINSTANCE hPrevInstance, PWSTR pCommandLine
 			L"My DirectX Window",
 			WS_OVERLAPPEDWINDOW | WS_VISIBLE,
 			0, 0,
-			580, 720,
+			1980, 1080,
 			NULL, NULL, hCurrentInstance, NULL
 		);
 
-		/*		NOTE!!!
-				
-				If making the title bar Black doesn't suet your taste. just replace:
-
-				- EnableDarkTitleBar( PrimaryWindow_Handle, nCmdShow ); 
-				
-				function with 
-
-				- ShowWindow(PrimaryWindow_Handle, nCmdShow);
-		*/
-		
-		//BlackTitleBar(PrimaryWindow_Handle);
-
-		//EnableDarkTitleBar(PrimaryWindow_Handle);
-		//ShowWindow(PrimaryWindow_Handle, nCmdShow);
+		//DX11Utils_BlackTitleBar(PrimaryWindow_Handle);
 
 		if ( PrimaryWindow_Handle )
 		{

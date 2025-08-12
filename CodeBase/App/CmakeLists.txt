@@ -1,3 +1,4 @@
+
 # declare your sources and headers
 set(APP_SRCS
     "${CMAKE_CURRENT_SOURCE_DIR}/Src/Source.cpp"
@@ -11,6 +12,7 @@ build_tool(Window_Setup_template
     OUTPUT_DIR   App         # sub-folder under GLOBAL_OUTPUT_DIR
     SOURCES      "${APP_SRCS}"
     HEADERS      "${APP_HDRS}"
-    LINK_LIBS    ws2_32 
+    LINK_LIBS    ws2_32 DX11Utils::DX11Utils
     WIN32        ON                   # produces a Win32 GUI exe
 )
+
