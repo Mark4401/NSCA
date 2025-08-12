@@ -1,5 +1,5 @@
 #include"Global_Header.h"
-
+#include<DX11Main.h>
 
 using namespace std;
 
@@ -53,12 +53,12 @@ wWinMain(HINSTANCE hCurrentInstance, HINSTANCE hPrevInstance, PWSTR pCommandLine
 			PrimaryCLASS.lpszClassName,
 			L"My DirectX Window",
 			WS_OVERLAPPEDWINDOW | WS_VISIBLE,
-			0, 0,
-			1980, 1080,
+			CW_USEDEFAULT, CW_USEDEFAULT,
+			500, 500,
 			NULL, NULL, hCurrentInstance, NULL
 		);
 
-		//DX11Utils_BlackTitleBar(PrimaryWindow_Handle);
+		DX11Utils_BlackTitleBar(PrimaryWindow_Handle);
 
 		if ( PrimaryWindow_Handle )
 		{

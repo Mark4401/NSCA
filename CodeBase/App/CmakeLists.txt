@@ -1,4 +1,3 @@
-
 # declare your sources and headers
 set(APP_SRCS
     "${CMAKE_CURRENT_SOURCE_DIR}/Src/Source.cpp"
@@ -9,10 +8,11 @@ set(APP_HDRS
 
 # call the function
 build_tool(Window_Setup_template
-    OUTPUT_DIR   App         # sub-folder under GLOBAL_OUTPUT_DIR
-    SOURCES      "${APP_SRCS}"
-    HEADERS      "${APP_HDRS}"
-    LINK_LIBS    ws2_32 DX11Utils::DX11Utils
-    WIN32        ON                   # produces a Win32 GUI exe
+    OUTPUT_DIR              App                                                 # sub-folder under GLOBAL_OUTPUT_DIR
+    SOURCES                 "${APP_SRCS}"
+    HEADERS                 "${APP_HDRS}"
+    LINK_LIBS               ws2_32 DX11Utils  
+    LIBRARY_PATH                                                                # import    ed .lib search path
+    BUILD_BINARIES_PATH     "${GLOBAL_OUTPUT_DIR}/DX11_Lib/RelWithDebInfo"      # built DLL output folder
+    WIN32         ON                                                            # produces a Win32 GUI exe
 )
-
