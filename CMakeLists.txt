@@ -11,15 +11,15 @@ set(CMAKE_C_EXTENSIONS OFF)
 
 # define a global root for all binary outputs
 set(GLOBAL_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Builds")
-
+set(EXTERNAL_LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/Library_builds")
 # include the functions file
-include(cmake/build_tool.cmake)
-include(cmake/lib_build_Script.cmake)
+include(cmake/build_applications.cmake)
+include(cmake/build_library.cmake)
 
 # include(cmake/DX11UtilsConfig.cmake)
 
 
 # Add subdirectory app
-add_subdirectory(CodeBase/App)
 add_subdirectory(CodeBase/DX11_Library)
+add_subdirectory(CodeBase/App)
 
