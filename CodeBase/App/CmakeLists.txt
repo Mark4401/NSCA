@@ -12,9 +12,9 @@ build_application(Window_Setup_template
     OUTPUT_DIR              App                                                 # sub-folder under GLOBAL_OUTPUT_DIR
     SOURCES                 "${APP_SRCS}"
     HEADERS                 "${APP_HDRS}"
-    LINK_LIBS               ws2_32  DX11Utils
-    LIBRARY_PATH            "${EXTERNAL_LIBRARIES}/DX11-Version-0-1/"    # external headers folder
-    BUILD_BINARIES_PATH     "${EXTERNAL_LIBRARIES}/DX11-Version-0-1"           # folder containing .lib and .dll files
+    LINK_LIBS               ws2_32 DX11Utils
+    LIBRARY_PATH            ""    # external headers folder
+    BUILD_BINARIES_PATH     "${DEBUG_BIN}"           # folder containing .lib and .dll files
     WIN32                   ON                                                  # produces a Win32 GUI exe
 )
 

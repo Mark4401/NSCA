@@ -1,5 +1,8 @@
 #include"Global_Header.h"
-#include<Include/DX11Main.h>
+#include"DX11Main.h"
+
+/// External/Stable library .h files
+//#include<Include/DX11Main.h>
 
 using namespace std;
 
@@ -59,6 +62,8 @@ wWinMain(HINSTANCE hCurrentInstance, HINSTANCE hPrevInstance, PWSTR pCommandLine
 		);
 
 		DX11Utils_BlackTitleBar(PrimaryWindow_Handle);
+
+		//DX11Utils::BlackTitleBar(PrimaryWindow_Handle);
 
 		if ( PrimaryWindow_Handle )
 		{

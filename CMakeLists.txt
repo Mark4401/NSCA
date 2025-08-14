@@ -10,8 +10,37 @@ set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
 
 # define a global root for all binary outputs
+
+###############################################
+###############################################
+
+
+# Internal Library Environment: Variables, Paths, Binaries
+
+
+
 set(GLOBAL_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Builds")
+
+set(DEBUG_BIN "${GLOBAL_OUTPUT_DIR}/DX11_Lib/Debug")
+set(RELEASE_BIN "${GLOBAL_OUTPUT_DIR}/DX11_Lib/RelWithDebInfo")
+
+
+###############################################
+###############################################
+
+
+# External/Stable Library Environment: Variables, Paths, Binaries
+
+
 set(EXTERNAL_LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/Library_builds")
+
+
+###############################################
+###############################################
+
+
+
+
 # include the functions file
 include(cmake/build_applications.cmake)
 include(cmake/build_library.cmake)
