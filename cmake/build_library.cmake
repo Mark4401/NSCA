@@ -25,7 +25,7 @@ function(build_library TARGET_NAME)
     )
 
     # definitions and compile options
-    target_compile_definitions(${TARGET_NAME} PRIVATE UNICODE _UNICODE DX11UTILS_EXPORTS)
+    target_compile_definitions(${TARGET_NAME} PRIVATE UNICODE _UNICODE NSCA_EXPORTS)
     target_compile_options(${TARGET_NAME} PRIVATE
         $<$<CXX_COMPILER_ID:MSVC>:/utf-8>
         $<$<CXX_COMPILER_ID:GNU>:-finput-charset=UTF-8 -fexec-charset=UTF-8>

@@ -8,11 +8,11 @@ set(APP_HDRS
 )
 
 # call the function
-build_application(NSCA_application
-    OUTPUT_DIR              app_dir                                                 # sub-folder under GLOBAL_OUTPUT_DIR
+build_application(Window_Setup_template
+    OUTPUT_DIR              App                                                 # sub-folder under GLOBAL_OUTPUT_DIR
     SOURCES                 "${APP_SRCS}"
     HEADERS                 "${APP_HDRS}"
-    LINK_LIBS               ws2_32 NSCA
+    LINK_LIBS               ws2_32 DX11Utils
     LIBRARY_PATH            ""    # external headers folder
     BUILD_BINARIES_PATH     "${DEBUG_BIN}"           # folder containing .lib and .dll files
     WIN32                   ON                                                  # produces a Win32 GUI exe

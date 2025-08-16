@@ -1,5 +1,5 @@
 #include"Global_Header.h"
-#include"NSCA.h"
+#include"DX11Main.h"
 
 /// External/Stable library .h files
 //#include<Include/DX11Main.h>
@@ -54,15 +54,16 @@ wWinMain(HINSTANCE hCurrentInstance, HINSTANCE hPrevInstance, PWSTR pCommandLine
 		HWND PrimaryWindow_Handle = CreateWindowExW(
 			0,
 			PrimaryCLASS.lpszClassName,
-			L"NSCA -> Nodal System Components API",
+			L"My DirectX Window",
 			WS_OVERLAPPEDWINDOW | WS_VISIBLE,
 			CW_USEDEFAULT, CW_USEDEFAULT,
 			500, 500,
 			NULL, NULL, hCurrentInstance, NULL
 		);
 
+		DX11Utils_BlackTitleBar(PrimaryWindow_Handle);
+
 		//DX11Utils::BlackTitleBar(PrimaryWindow_Handle);
-		NSCA::BlackTitleBar(PrimaryWindow_Handle);
 
 		if ( PrimaryWindow_Handle )
 		{

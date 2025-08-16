@@ -1,4 +1,5 @@
-﻿cmake_minimum_required(VERSION 3.16...3.28 FATAL_ERROR)
+```cmake
+cmake_minimum_required(VERSION 3.16...3.28 FATAL_ERROR)
 project(DX11_repo VERSION 0.0.1 LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 23)
@@ -21,8 +22,8 @@ set(CMAKE_C_EXTENSIONS OFF)
 
 set(GLOBAL_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Builds")
 
-set(DEBUG_BIN "${GLOBAL_OUTPUT_DIR}/NSCA_Lib/Debug")
-set(RELEASE_BIN "${GLOBAL_OUTPUT_DIR}/NSCA_Lib/RelWithDebInfo")
+set(DEBUG_BIN "${GLOBAL_OUTPUT_DIR}/DX11_Lib/Debug")
+set(RELEASE_BIN "${GLOBAL_OUTPUT_DIR}/DX11_Lib/RelWithDebInfo")
 
 
 ###############################################
@@ -49,6 +50,8 @@ include(cmake/build_library.cmake)
 
 
 # Add subdirectory app
+add_subdirectory(CodeBase/DX11_Library)
 add_subdirectory(CodeBase/App)
-add_subdirectory(CodeBase/NSCA_Library)
 
+
+```
