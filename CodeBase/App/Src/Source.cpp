@@ -56,7 +56,7 @@ wWinMain(HINSTANCE hCurrentInstance, HINSTANCE hPrevInstance, PWSTR pCommandLine
 			PrimaryCLASS.lpszClassName,
 			L"NSCA -> Nodal System Components API",
 			WS_OVERLAPPEDWINDOW | WS_VISIBLE,
-			CW_USEDEFAULT, CW_USEDEFAULT,
+			1000, 500,
 			500, 500,
 			NULL, NULL, hCurrentInstance, NULL
 		);

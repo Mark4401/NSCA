@@ -10,7 +10,9 @@
 *.userosscache
 *.sln.docstates
 
+/**/Release/
 /Notes/
+/**/NSCA_V_0-1/cmake
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

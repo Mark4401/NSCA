@@ -1,5 +1,7 @@
+﻿cmake_minimum_required(VERSION 3.16...3.28 FATAL_ERROR)
+project(NCSA_app VERSION 0.1 LANGUAGES C CXX)
 
-# declare your sources and headers
+# Declare your sources and headers
 set(APP_SRCS
     "${CMAKE_CURRENT_SOURCE_DIR}/Src/Source.cpp"
 )
@@ -7,14 +9,17 @@ set(APP_HDRS
     "${CMAKE_CURRENT_SOURCE_DIR}/Include/Global_Header.h"
 )
 
-# call the function
-build_application(NSCA_application
-    OUTPUT_DIR              app_dir                                                 # sub-folder under GLOBAL_OUTPUT_DIR
-    SOURCES                 "${APP_SRCS}"
-    HEADERS                 "${APP_HDRS}"
-    LINK_LIBS               ws2_32 NSCA
-    LIBRARY_PATH            ""    # external headers folder
-    BUILD_BINARIES_PATH     "${DEBUG_BIN}"           # folder containing .lib and .dll files
-    WIN32                   ON                                                  # produces a Win32 GUI exe
+# Call the helper
+App_builder(${PROJECT_NAME}
+    OUTPUT_DIR           app_dir                          # sub‐folder under GLOBAL_OUTPUT_DIR
+    WIN32                ON                               # produce a Win32 GUI executable
+    EXPORT_FLAG          ""                  # custom compile‐definition for symbol export
+    SOURCES              ${APP_SRCS}                      # .cpp source files
+    HEADERS              ${APP_HDRS}                      # .h header files (for IDE visibility)
+    PUBLIC_INCLUDES      "${CMAKE_CURRENT_SOURCE_DIR}/Include"  
+    PRIVATE_INCLUDES     "${CMAKE_CURRENT_SOURCE_DIR}/Internal"
+    LINK_LIBS            ws2_32 NSCA::NSCA              # link against WinSock2 and your NSCA imported target
 )
+
+deploy_dll(NSCA "${RELEASE_BIN}/bin" ${PROJECT_NAME})
 
