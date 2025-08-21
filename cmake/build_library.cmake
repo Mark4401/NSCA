@@ -45,7 +45,7 @@ function(build_and_export_library TARGET_NAME)
         $<$<CXX_COMPILER_ID:Clang>:-finput-charset=UTF-8 -fexec-charset=UTF-8>
     )
 
-    # link libraries (if any)
+    # Link libraries (if any)
     if(LIB_LINK_LIBS)
         target_link_libraries(${TARGET_NAME} PRIVATE ${LIB_LINK_LIBS})
     endif()
@@ -65,7 +65,9 @@ function(build_and_export_library TARGET_NAME)
         endforeach()
     endif()
 
-    # Generate Config + Version files
+    # -------------------------------
+    # Config + Version + Export (relocatable)
+    # -------------------------------
     include(CMakePackageConfigHelpers)
 
     if(NOT LIB_VERSION)
@@ -84,12 +86,22 @@ function(build_and_export_library TARGET_NAME)
     configure_package_config_file(
         "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Config.cmake.in"
         "${CONFIG_FILE}"
-        INSTALL_DESTINATION "${BASE_OUT}/cmake"
+        INSTALL_DESTINATION cmake      # Relocatable install path
     )
 
-    # Export targets
-    set(EXPORT_FILE "${BASE_OUT}/cmake/${TARGET_NAME}Targets.cmake")
-    export(TARGETS ${TARGET_NAME} FILE "${EXPORT_FILE}" NAMESPACE ${TARGET_NAME}::)
+    # Install target and export (relocatable)
+    install(TARGETS ${TARGET_NAME}
+        EXPORT ${TARGET_NAME}Targets
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION bin
+        ARCHIVE DESTINATION bin
+        INCLUDES DESTINATION include/${TARGET_NAME}
+    )
+
+    install(EXPORT ${TARGET_NAME}Targets
+        NAMESPACE ${TARGET_NAME}::
+        DESTINATION cmake
+    )
 
     # -------------------------------
     # Automatically deploy DLL to dependent executables
@@ -113,9 +125,17 @@ function(build_and_export_library TARGET_NAME)
         endif()
     endforeach()
 
+    # -------------------------------
+    # Visual Studio-friendly automatic install
+    # -------------------------------
+    add_custom_target(install_${TARGET_NAME} ALL
+        COMMAND ${CMAKE_COMMAND} --install ${CMAKE_BINARY_DIR} --prefix ${BASE_OUT}
+        DEPENDS ${TARGET_NAME}
+        COMMENT "Installing ${TARGET_NAME} (headers, binaries, cmake files) to ${BASE_OUT}"
+    )
+
     message(STATUS "Library ${TARGET_NAME} built in ${BASE_OUT}/bin")
     message(STATUS "Headers copied to ${BASE_OUT}/include/${TARGET_NAME}")
     message(STATUS "Config: ${CONFIG_FILE}")
     message(STATUS "Version: ${VERSION_FILE}")
-    message(STATUS "Targets file: ${EXPORT_FILE}")
 endfunction()

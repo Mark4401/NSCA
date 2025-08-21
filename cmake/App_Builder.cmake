@@ -9,17 +9,17 @@ function(App_builder TARGET_NAME)
         ${ARGN}
     )
 
-    # pick multi-config vs single-config
+    # Determine multi-config vs single-config
     if(CMAKE_CONFIGURATION_TYPES)
         set(CONFIG_NAME "$<CONFIG>")
     else()
         set(CONFIG_NAME "${CMAKE_BUILD_TYPE}")
     endif()
 
-    # where the .exe will live
+    # Where the .exe will live
     set(OUT_DIR "${GLOBAL_OUTPUT_DIR}/${APP_OUTPUT_DIR}/${CONFIG_NAME}")
 
-    # add executable (optionally WIN32 GUI)
+    # Add executable (optionally WIN32 GUI)
     if(APP_WIN32)
         add_executable(${TARGET_NAME} WIN32 ${APP_SOURCES})
     else()
@@ -32,13 +32,13 @@ function(App_builder TARGET_NAME)
         source_group("Header Files" FILES ${APP_HEADERS})
     endif()
 
-    # public & private include paths (BUILD_INTERFACE only)
-    target_include_directories(${TARGET_NAME}
-        PUBLIC
-            $<BUILD_INTERFACE:${APP_PUBLIC_INCLUDES}>
-        PRIVATE
-            $<BUILD_INTERFACE:${APP_PRIVATE_INCLUDES}>
-    )
+    # Public & private include paths (BUILD_INTERFACE only)
+    if(APP_PUBLIC_INCLUDES)
+        target_include_directories(${TARGET_NAME} PUBLIC $<BUILD_INTERFACE:${APP_PUBLIC_INCLUDES}>)
+    endif()
+    if(APP_PRIVATE_INCLUDES)
+        target_include_directories(${TARGET_NAME} PRIVATE $<BUILD_INTERFACE:${APP_PRIVATE_INCLUDES}>)
+    endif()
 
     # Unicode export flag + UTF-8 compiler options
     if(APP_EXPORT_FLAG)
@@ -46,19 +46,33 @@ function(App_builder TARGET_NAME)
     else()
         target_compile_definitions(${TARGET_NAME} PRIVATE UNICODE _UNICODE)
     endif()
+
     target_compile_options(${TARGET_NAME} PRIVATE
         $<$<CXX_COMPILER_ID:MSVC>:/utf-8>
         $<$<CXX_COMPILER_ID:GNU>:-finput-charset=UTF-8 -fexec-charset=UTF-8>
         $<$<CXX_COMPILER_ID:Clang>:-finput-charset=UTF-8 -fexec-charset=UTF-8>
     )
 
-    # link in your libs (imported targets or full paths)
-    target_link_libraries(${TARGET_NAME} PRIVATE ${APP_LINK_LIBS})
+    # Link libraries (imported targets or full paths)
+    if(APP_LINK_LIBS)
+        target_link_libraries(${TARGET_NAME} PRIVATE ${APP_LINK_LIBS})
+    endif()
 
-    # place only the .exe into OUT_DIR
+    # Automatically include interface directories from imported targets
+    foreach(lib IN LISTS APP_LINK_LIBS)
+        if(TARGET ${lib})
+            get_target_property(INC_DIRS ${lib} INTERFACE_INCLUDE_DIRECTORIES)
+            if(INC_DIRS)
+                target_include_directories(${TARGET_NAME} PUBLIC ${INC_DIRS})
+            endif()
+        endif()
+    endforeach()
+
+    # Set output directories
     set_target_properties(${TARGET_NAME} PROPERTIES
-        ARCHIVE_OUTPUT_DIRECTORY ${OUT_DIR}
-        LIBRARY_OUTPUT_DIRECTORY ${OUT_DIR}
-        RUNTIME_OUTPUT_DIRECTORY ${OUT_DIR}
+        ARCHIVE_OUTPUT_DIRECTORY "${OUT_DIR}"
+        LIBRARY_OUTPUT_DIRECTORY "${OUT_DIR}"
+        RUNTIME_OUTPUT_DIRECTORY "${OUT_DIR}"
+        OUTPUT_NAME ${TARGET_NAME}
     )
 endfunction()
