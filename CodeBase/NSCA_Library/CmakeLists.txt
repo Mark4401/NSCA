@@ -1,6 +1,6 @@
 build_and_export_library(NSCA
   OUTPUT_DIR       NSCA_Lib
-  VERSION          0.2.0
+  VERSION          0.2.1
   EXPORT_FLAG      NSCA_EXPORTS
   SOURCES          Src/NSCA.cpp
   HEADERS          Include/NSCA.h
