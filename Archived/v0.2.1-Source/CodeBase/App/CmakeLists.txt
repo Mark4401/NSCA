@@ -11,11 +11,6 @@ find_package(NSCA REQUIRED)
 # Sources and headers
 # ------------------------
 set(APP_SRCS
-    
-    # WIN32 specific build 
-    # "${CMAKE_CURRENT_SOURCE_DIR}/Src/Source.cpp"
-
-    # Generic int main() file 
     "${CMAKE_CURRENT_SOURCE_DIR}/Src/Source.cpp"
 )
 set(APP_HDRS

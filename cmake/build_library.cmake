@@ -17,7 +17,7 @@ function(build_and_export_library TARGET_NAME)
     # Base output directory with config folder
     set(BASE_OUT "${GLOBAL_OUTPUT_DIR}/${LIB_OUTPUT_DIR}/${CONFIG_NAME}")
 
-    # Create necessary subfolders
+    # Create necessary sub-folders
     file(MAKE_DIRECTORY "${BASE_OUT}/bin")
     file(MAKE_DIRECTORY "${BASE_OUT}/include/${TARGET_NAME}")
     file(MAKE_DIRECTORY "${BASE_OUT}/cmake")
