@@ -19,27 +19,23 @@ set(GLOBAL_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Builds")
 set(EXTERNAL_LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/Library_builds")
 
 # ------------------------
-# NSCA library paths and versioning
+# NSCA library paths and version
 # ------------------------
 set(NSCA_BUILD_ROOT "${GLOBAL_OUTPUT_DIR}/NSCA_Lib")
-set(NSCA_RELEASE_ROOT "${EXTERNAL_LIBRARIES}/NSCA-0.1")
-option(NSCA_USE_RELEASE "Use stable NSCA release" OFF)
 
-if(NSCA_USE_RELEASE)
-    set(NSCA_PREFIX "${NSCA_RELEASE_ROOT}")
+
+
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    set(NSCA_PREFIX "${NSCA_BUILD_ROOT}/Debug")
 else()
-    if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-        set(NSCA_PREFIX "${NSCA_BUILD_ROOT}/Debug/")
-    else()
-        set(NSCA_PREFIX "${NSCA_BUILD_ROOT}/Release/")
-    endif()
+    set(NSCA_PREFIX "${NSCA_BUILD_ROOT}/Release")
 endif()
+
 
 # ------------------------
 # CMake prefix paths for find_package()
 # ------------------------
 list(APPEND CMAKE_PREFIX_PATH
-    "${NSCA_PREFIX}"
     "${EXTERNAL_LIBRARIES}/DX11-Version-0-1"
 )
 

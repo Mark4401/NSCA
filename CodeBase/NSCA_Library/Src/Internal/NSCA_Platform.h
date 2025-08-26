@@ -18,6 +18,10 @@
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "dwmapi.lib")
 
+#include <string>
+#include <iostream>
+#include <Windows.h>
+
 // Enable Unicode for Win32 API
 #ifndef UNICODE
 #define UNICODE

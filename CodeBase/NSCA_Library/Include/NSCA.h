@@ -2,34 +2,32 @@
 #define NSCA_H
 
 #ifdef NSCA_EXPORTS
-#define NSCA_API __declspec(dllexport)
+#define NSCA __declspec(dllexport)
 #else
-#define NSCA_API __declspec(dllimport)
+#define NSCA __declspec(dllimport)
 #endif
+
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-    // Forward declaration of HWND as opaque pointer for public header
-#ifdef _WIN32
-    typedef struct HWND__* HWND;
-#else
-    typedef void* HWND;  // fallback for non-Windows platforms
-#endif
+	typedef struct __UNIVERSAL_MEMORY__ UNIVERSAL_MEMORY;
+	typedef struct __WINDOW__			WINDOW;
 
-    // C-compatible exported function
-    NSCA_API void NSCA_BlackTitleBar(HWND Window_handle);
+#define SYSTEM_MEMORY 1;
+#define WINDOW_MEMORY 2;
 
-#ifdef __cplusplus
-} // extern "C"
 
-// C++ wrapper namespace
-namespace NSCA {
-    inline void BlackTitleBar(HWND Window_handle) {
-        NSCA_BlackTitleBar(Window_handle);
-    }
+	NSCA WINDOW* Create_Window(int Height, int Width, const wchar_t* App_title, bool Dark_title_bar);
+	NSCA void Delete_User_defined_Window(WINDOW* window);
+	
+	NSCA bool System_Events_Queue(bool Active_state);
+
+#ifdef  __cplusplus
 }
 #endif // __cplusplus
+
+
 
 #endif // DX11_MAIN_H

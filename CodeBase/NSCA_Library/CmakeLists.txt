@@ -1,9 +1,21 @@
+# ------------------------
+# Sources and headers
+# ------------------------
+set(LIBRARY_SRCS
+
+    # Generic int main() file 
+    "${CMAKE_CURRENT_SOURCE_DIR}/Src/NSCA.cpp"
+)
+set(LIBRARY_HDRS
+    "${CMAKE_CURRENT_SOURCE_DIR}/Include/NSCA.h"
+)
+
 build_and_export_library(NSCA
   OUTPUT_DIR       NSCA_Lib
   VERSION          0.2.1
   EXPORT_FLAG      NSCA_EXPORTS
-  SOURCES          Src/NSCA.cpp
-  HEADERS          Include/NSCA.h
+  SOURCES          ${LIBRARY_SRCS}
+  HEADERS          ${LIBRARY_HDRS}
   LINK_LIBS        d3d11 dxgi d3dcompiler dwmapi
   PUBLIC_INCLUDES  ${CMAKE_CURRENT_SOURCE_DIR}/Include
   PRIVATE_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR}/Src/Internal
