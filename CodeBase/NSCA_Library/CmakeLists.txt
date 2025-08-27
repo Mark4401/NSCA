@@ -5,9 +5,11 @@ set(LIBRARY_SRCS
 
     # Generic int main() file 
     "${CMAKE_CURRENT_SOURCE_DIR}/Src/NSCA.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Src/NSCA++.cpp"
 )
 set(LIBRARY_HDRS
     "${CMAKE_CURRENT_SOURCE_DIR}/Include/NSCA.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Include/NSCA++.h"
 )
 
 build_and_export_library(NSCA

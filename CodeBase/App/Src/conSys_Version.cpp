@@ -1,20 +1,68 @@
-#include"NSCA.h"
-#include"Global_Header.h"
-#include"Foo.h"
+#include "Global_Header.h"
+#include "Foo.h"
+#include "NSCA.h"
+#include "NSCA++.h"
 
 using namespace std;
 
-
-int main()
+void C_method()
 {
-	WINDOW* Display = Create_Window(1920, 1080, L"NSCA -> Nodal System Components API", true);
+    WINDOW* Display = Create_Window(1280, 720, L"NSCA -> Nodal System Components API", true);
 
-	while (System_Events_Queue(true))
-	{
-		cout << "Active Window\n";
-	}
+    while (System_Events_Queue(true))
+    {
+        cout << "C Method Window Active\n";
+    }
 
-	Delete_User_defined_Window(Display);
+    Delete_User_defined_Window(Display);
+}
 
-	return 0;
+void Cpp_Method()
+{
+    NSCA::Window window(600, 800, L"Cpp Wrapper Window", true);
+
+    while (window.PollEvents())
+    {
+        cout << "C++ Wrapper Window Active\n";
+    }
+}
+
+int main(int argc, char* argv[])
+{
+    string input;
+    bool keepRunning = true;
+
+    while (keepRunning)
+    {
+        cout << "Select window method to run:\n";
+        cout << "1. C method\n";
+        cout << "2. C++ wrapper method\n";
+        cout << "Enter choice (1 or 2): ";
+        getline(cin, input);
+
+        if (input == "1")
+        {
+            C_method();
+        }
+        else if (input == "2")
+        {
+            Cpp_Method();
+        }
+        else
+        {
+            cout << "Invalid choice.\n";
+            continue;
+        }
+
+        cout << "Do you want to run another window? (y/n): ";
+        getline(cin, input);
+
+        if (input != "y" && input != "Y")
+        {
+            keepRunning = false;
+        }
+    }
+
+    cout << "Program exiting...\n";
+    return 0;
 }

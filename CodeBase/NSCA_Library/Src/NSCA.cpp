@@ -1,4 +1,3 @@
-#include "Internal/NSCA_Platform.h"
 #include "NSCA.h"
 #include "NSCA_Platform.h"
 
@@ -30,6 +29,9 @@ struct __WINDOW__
 
 // Global pointer to track current window
 static WINDOW* g_mainWindow = nullptr;
+// Global flag to track if class has been registered
+static bool g_classRegistered = false;
+
 
 bool Running = true;
 
@@ -76,15 +78,13 @@ void NSCA_BlackTitleBar(HWND Window_handle)
 
 WINDOW* Create_Window(int Height, int Width, const wchar_t* App_title, bool Dark_title_bar)
 {
-	WINDOW* Screen						= new __WINDOW__();
-	//Screen->TypeInfo.memory				= nullptr;
-	Screen->TypeInfo.ID_type			= WINDOW_MEMORY;
-	Screen->Height						= Height;
-	Screen->Width						= Width;
-	Screen->title						= App_title;
-	Screen->Dark_title_Bar				= Dark_title_bar;
+	WINDOW* Screen = new __WINDOW__();
+	Screen->TypeInfo.ID_type = WINDOW_MEMORY;
+	Screen->Height = Height;
+	Screen->Width = Width;
+	Screen->title = App_title;
+	Screen->Dark_title_Bar = Dark_title_bar;
 
-	//	WIN32 wWinMain Arguments 
 	Screen->hCurrentInstance = GetModuleHandle(nullptr);
 	Screen->hPrevInstance = nullptr;
 	Screen->pCommandLine = GetCommandLineW();
@@ -93,47 +93,52 @@ WINDOW* Create_Window(int Height, int Width, const wchar_t* App_title, bool Dark
 
 	const wchar_t* className = L"NSCA_WindowClass";
 
-	WNDCLASSW Window_CLASS = { };
-
-	Window_CLASS.style			= CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
-	Window_CLASS.lpfnWndProc	= MainWindowProc;
-	Window_CLASS.hInstance		= Screen->hCurrentInstance;
-	Window_CLASS.lpszClassName	= className;
-
-	if ( RegisterClassW(&Window_CLASS) )
+	// Register class only once
+	if (!g_classRegistered)
 	{
+		WNDCLASSW Window_CLASS = { };
+		Window_CLASS.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
+		Window_CLASS.lpfnWndProc = MainWindowProc;
+		Window_CLASS.hInstance = Screen->hCurrentInstance;
+		Window_CLASS.lpszClassName = className;
 
-		Screen->Window_handle = CreateWindowExW(
-			0,
-			className,
-			Screen->title,
-			/*L"NSCA -> Nodal System Components API"*/
-			WS_OVERLAPPEDWINDOW | WS_VISIBLE,
-			CW_USEDEFAULT, CW_USEDEFAULT,
-			Screen->Height, Screen->Width,
-			NULL, NULL, Screen->hCurrentInstance, NULL
-		);
+		if (!RegisterClassW(&Window_CLASS))
+		{
+			delete Screen;
+			cerr << "Window Registration Failed!\n";
+			exit(EXIT_FAILURE);
+		}
+
+		g_classRegistered = true;
 	}
-	else
+
+	// Create the window normally
+	Screen->Window_handle = CreateWindowExW(
+		0,
+		className,
+		Screen->title,
+		WS_OVERLAPPEDWINDOW | WS_VISIBLE,
+		CW_USEDEFAULT, CW_USEDEFAULT,
+		Screen->Height, Screen->Width,
+		NULL, NULL, Screen->hCurrentInstance, NULL
+	);
+
+	if (!Screen->Window_handle)
 	{
 		delete Screen;
-
-		cerr << "Window Registration Failed!\n";
-
+		cerr << "Window Creation Failed!\n";
 		exit(EXIT_FAILURE);
 	}
 
 	// Optional dark title bar tweak
 	if (Screen->Dark_title_Bar)
-	{
 		NSCA_BlackTitleBar(Screen->Window_handle);
-	}
 
 	g_mainWindow = Screen; // store reference globally
 
 	return Screen;
-
 }
+
 void Delete_User_defined_Window(WINDOW* window)
 {
 	if (!window)

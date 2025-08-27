@@ -2,9 +2,9 @@
 #define NSCA_H
 
 #ifdef NSCA_EXPORTS
-#define NSCA __declspec(dllexport)
+#define _NSCA_ __declspec(dllexport)
 #else
-#define NSCA __declspec(dllimport)
+#define _NSCA_ __declspec(dllimport)
 #endif
 
 
@@ -19,12 +19,11 @@ extern "C" {
 #define WINDOW_MEMORY 2;
 
 
-	NSCA WINDOW* Create_Window(int Height, int Width, const wchar_t* App_title, bool Dark_title_bar);
-	NSCA void Delete_User_defined_Window(WINDOW* window);
+	_NSCA_ WINDOW* Create_Window(int Height, int Width, const wchar_t* App_title, bool Dark_title_bar);
+	_NSCA_ void Delete_User_defined_Window(WINDOW* window);
 	
-	NSCA bool System_Events_Queue(bool Active_state);
-
-#ifdef  __cplusplus
+	_NSCA_ bool System_Events_Queue(bool Active_state);
+#ifdef __cplusplus
 }
 #endif // __cplusplus
 
