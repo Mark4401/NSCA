@@ -1,5 +1,4 @@
 #include "Global_Header.h"
-#include "Foo.h"
 #include "NSCA.h"
 #include "NSCA++.h"
 

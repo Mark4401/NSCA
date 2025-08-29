@@ -20,5 +20,5 @@ build_and_export_library(NSCA
   HEADERS          ${LIBRARY_HDRS}
   LINK_LIBS        d3d11 dxgi d3dcompiler dwmapi
   PUBLIC_INCLUDES  ${CMAKE_CURRENT_SOURCE_DIR}/Include
-  PRIVATE_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR}/Src/Internal
+  PRIVATE_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR}/Internal
 )

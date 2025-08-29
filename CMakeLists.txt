@@ -1,5 +1,5 @@
 ﻿cmake_minimum_required(VERSION 3.22 FATAL_ERROR)
-project(DX11_repo VERSION 0.1 LANGUAGES C CXX)
+project(DX11_repo VERSION 0.3 LANGUAGES C CXX)
 
 # ------------------------
 # Compiler standards
