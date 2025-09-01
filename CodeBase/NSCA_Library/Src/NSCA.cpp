@@ -80,6 +80,7 @@ WINDOW* Create_Window(int Height, int Width, const wchar_t* App_title, bool Dark
 {
 	WINDOW* Screen = new __WINDOW__();
 	Screen->TypeInfo.ID_type = WINDOW_MEMORY;
+	Screen->TypeInfo.memory = nullptr;
 	Screen->Height = Height;
 	Screen->Width = Width;
 	Screen->title = App_title;
@@ -177,4 +178,70 @@ bool System_Events_Queue(bool Active_state)
 	std::cout << "System Queue Empty Or Processed All messages!\n";
 
 	return Running;
+}
+
+
+void System_Info()
+{
+	// Declare a SYSTEM_INFO structure to hold system information
+	SYSTEM_INFO systemInfo;
+
+	// Call GetNativeSystemInfo to populate the structure
+	GetNativeSystemInfo(&systemInfo);
+
+	// Display the system information
+	std::cout << "=== System Information ===" << std::endl;
+
+	// Processor architecture
+	switch (systemInfo.wProcessorArchitecture) {
+	case PROCESSOR_ARCHITECTURE_AMD64:
+		std::cout << "Processor Architecture: x64 (AMD or Intel)" << std::endl;
+		break;
+	case PROCESSOR_ARCHITECTURE_ARM:
+		std::cout << "Processor Architecture: ARM" << std::endl;
+		break;
+	case PROCESSOR_ARCHITECTURE_IA64:
+		std::cout << "Processor Architecture: Intel Itanium-based" << std::endl;
+		break;
+	case PROCESSOR_ARCHITECTURE_INTEL:
+		std::cout << "Processor Architecture: x86" << std::endl;
+		break;
+	case PROCESSOR_ARCHITECTURE_UNKNOWN:
+	default:
+		std::cout << "Processor Architecture: Unknown" << std::endl;
+		break;
+	}
+
+	// Number of processors
+	std::cout << "Number of Processors: " << systemInfo.dwNumberOfProcessors << std::endl;
+
+	// Page size
+	std::cout << "Page Size: " << systemInfo.dwPageSize << " bytes" << std::endl;
+
+	// Minimum application address
+	std::cout << "Minimum Application Address: "
+		<< systemInfo.lpMinimumApplicationAddress << std::endl;
+
+	// Maximum application address
+	std::cout << "Maximum Application Address: "
+		<< systemInfo.lpMaximumApplicationAddress << std::endl;
+
+	// Active processor mask
+	std::cout << "Active Processor Mask: 0x"
+		<< std::hex << systemInfo.dwActiveProcessorMask << std::dec << std::endl;
+
+	// Processor type
+	std::cout << "Processor Type: " << systemInfo.dwProcessorType << std::endl;
+
+	// Allocation granularity
+	std::cout << "Allocation Granularity: "
+		<< systemInfo.dwAllocationGranularity << " bytes" << std::endl;
+
+	// Processor level
+	std::cout << "Processor Level: " << systemInfo.wProcessorLevel << std::endl;
+
+	// Processor revision (split into high/low words for clarity)
+	WORD revision = systemInfo.wProcessorRevision;
+	std::cout << "Processor Revision: "
+		<< HIWORD(revision) << "." << LOWORD(revision) << std::endl;
 }

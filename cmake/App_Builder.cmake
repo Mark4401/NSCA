@@ -4,7 +4,7 @@ function(App_builder TARGET_NAME)
     cmake_parse_arguments(
         APP
         ""                                      # no single-letter args
-        "OUTPUT_DIR;WIN32;EXPORT_FLAG"          # single-value keywords
+        "OUTPUT_DIR;BUILD_DESTINATION_PATH;WIN32;EXPORT_FLAG"          # single-value keywords
         "SOURCES;HEADERS;LINK_LIBS;PUBLIC_INCLUDES;PRIVATE_INCLUDES"
         ${ARGN}
     )
@@ -17,7 +17,7 @@ function(App_builder TARGET_NAME)
     endif()
 
     # Where the .exe will live
-    set(OUT_DIR "${GLOBAL_OUTPUT_DIR}/${APP_OUTPUT_DIR}/${CONFIG_NAME}")
+    set(OUT_DIR "${APP_BUILD_DESTINATION_PATH}/${APP_OUTPUT_DIR}/${CONFIG_NAME}")
 
     # Add executable (optionally WIN32 GUI)
     if(APP_WIN32)

@@ -1,4 +1,5 @@
 #include "Global_Header.h"
+#include "Foo.h"
 #include "NSCA.h"
 #include "NSCA++.h"
 
@@ -63,5 +64,8 @@ int main(int argc, char* argv[])
     }
 
     cout << "Program exiting...\n";
+
+    System_Info();
+
     return 0;
 }

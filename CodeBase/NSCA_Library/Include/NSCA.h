@@ -23,6 +23,8 @@ extern "C" {
 	_NSCA_ void Delete_User_defined_Window(WINDOW* window);
 	
 	_NSCA_ bool System_Events_Queue(bool Active_state);
+
+	_NSCA_ void System_Info();
 #ifdef __cplusplus
 }
 #endif // __cplusplus

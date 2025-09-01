@@ -21,14 +21,15 @@ set(APP_HDRS
 # Build executable using helper
 # ------------------------
 App_builder(${PROJECT_NAME}
-    OUTPUT_DIR           app_dir
-    WIN32                OFF
-    EXPORT_FLAG          ""
-    SOURCES              ${APP_SRCS}
-    HEADERS              ${APP_HDRS}
-    PUBLIC_INCLUDES      "${CMAKE_CURRENT_SOURCE_DIR}/Include"
-    PRIVATE_INCLUDES     "${CMAKE_CURRENT_SOURCE_DIR}/Internal"
-    LINK_LIBS            ws2_32 NSCA::NSCA
+    OUTPUT_DIR                  app_dir
+    BUILD_DESTINATION_PATH      ${GLOBAL_OUTPUT_DIR}
+    WIN32                       OFF
+    EXPORT_FLAG                 ""
+    SOURCES                     ${APP_SRCS}
+    HEADERS                     ${APP_HDRS}
+    PUBLIC_INCLUDES             "${CMAKE_CURRENT_SOURCE_DIR}/Include"
+    PRIVATE_INCLUDES            "${CMAKE_CURRENT_SOURCE_DIR}/Internal"
+    LINK_LIBS                   ws2_32 NSCA::NSCA
 )
 
 # ------------------------

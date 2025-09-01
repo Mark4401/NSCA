@@ -37,6 +37,7 @@ endif()
 # ------------------------
 list(APPEND CMAKE_PREFIX_PATH
     "${EXTERNAL_LIBRARIES}/DX11-Version-0-1"
+    "${EXTERNAL_LIBRARIES}/NSCA-v0.3/cmake"
 )
 
 # ------------------------
@@ -51,3 +52,8 @@ include(cmake/DeployDLL.cmake)
 # ------------------------
 add_subdirectory(CodeBase/App)
 add_subdirectory(CodeBase/NSCA_Library)
+
+# ------------------------
+# Test Environment - Private ONLY
+# ------------------------
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Test)

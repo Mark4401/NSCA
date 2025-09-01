@@ -2,7 +2,7 @@ function(build_and_export_library TARGET_NAME)
     cmake_parse_arguments(
         LIB
         ""
-        "OUTPUT_DIR;VERSION;EXPORT_FLAG"
+        "OUTPUT_DIR;BUILD_DESTINATION_PATH;VERSION;EXPORT_FLAG"
         "SOURCES;HEADERS;LINK_LIBS;PUBLIC_INCLUDES;PRIVATE_INCLUDES"
         ${ARGN}
     )
@@ -15,7 +15,7 @@ function(build_and_export_library TARGET_NAME)
     endif()
 
     # Base output directory with config folder
-    set(BASE_OUT "${GLOBAL_OUTPUT_DIR}/${LIB_OUTPUT_DIR}/${CONFIG_NAME}")
+    set(BASE_OUT "${LIB_BUILD_DESTINATION_PATH}/${LIB_OUTPUT_DIR}/${CONFIG_NAME}")
 
     # Create necessary sub-folders
     file(MAKE_DIRECTORY "${BASE_OUT}/bin")

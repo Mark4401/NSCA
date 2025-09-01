@@ -5,3 +5,5 @@
 #define DX11UTILS_API
 #define NSCA __declspec(dllexport)
 #define NSCA __declspec(dllimport)
+#define _NSCA_ __declspec(dllexport)
+#define _NSCA_ __declspec(dllimport)
