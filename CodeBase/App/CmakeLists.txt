@@ -4,16 +4,19 @@ project(NSCA_app VERSION 0.3 LANGUAGES C CXX)
 # Add NSCA prefix to CMAKE_PREFIX_PATH (already determined in root)
 list(APPEND CMAKE_PREFIX_PATH "${NSCA_PREFIX}")
 
-find_package(NSCA REQUIRED)
+find_package(NSCA 0.3.3 REQUIRED)
+
 # ------------------------
 # Sources and headers
 # ------------------------
 
 set(APP_SRCS    
     "${CMAKE_CURRENT_SOURCE_DIR}/Src/conSys_Version.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Src/C_CPP_test.cpp"
 )
 set(APP_HDRS
     "${CMAKE_CURRENT_SOURCE_DIR}/Include/Global_Header.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Include/C_CPP_test.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Internal/foo.h"
 )
 
@@ -29,7 +32,7 @@ App_builder(${PROJECT_NAME}
     HEADERS                     ${APP_HDRS}
     PUBLIC_INCLUDES             "${CMAKE_CURRENT_SOURCE_DIR}/Include"
     PRIVATE_INCLUDES            "${CMAKE_CURRENT_SOURCE_DIR}/Internal"
-    LINK_LIBS                   ws2_32 NSCA::NSCA
+    LINK_LIBS                   ws2_32 NSCA
 )
 
 # ------------------------

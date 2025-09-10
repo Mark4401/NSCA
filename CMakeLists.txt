@@ -13,34 +13,6 @@ set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
 
 # ------------------------
-# Global output directories
-# ------------------------
-set(GLOBAL_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Builds")
-set(EXTERNAL_LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/Library_builds")
-
-# ------------------------
-# NSCA library paths and version
-# ------------------------
-set(NSCA_BUILD_ROOT "${GLOBAL_OUTPUT_DIR}/NSCA_Lib")
-
-
-
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set(NSCA_PREFIX "${NSCA_BUILD_ROOT}/Debug")
-else()
-    set(NSCA_PREFIX "${NSCA_BUILD_ROOT}/Release")
-endif()
-
-
-# ------------------------
-# CMake prefix paths for find_package()
-# ------------------------
-list(APPEND CMAKE_PREFIX_PATH
-    "${EXTERNAL_LIBRARIES}/DX11-Version-0-1"
-    "${EXTERNAL_LIBRARIES}/NSCA-v0.3/cmake"
-)
-
-# ------------------------
 # Include helper functions
 # ------------------------
 include(cmake/App_Builder.cmake)
@@ -48,12 +20,13 @@ include(cmake/build_library.cmake)
 include(cmake/DeployDLL.cmake)
 
 # ------------------------
-# Add subdirectories
-# ------------------------
-add_subdirectory(CodeBase/App)
-add_subdirectory(CodeBase/NSCA_Library)
-
-# ------------------------
 # Test Environment - Private ONLY
 # ------------------------
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Test)
+
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Test )
+
+# ------------------------
+# Add subdirectories
+# ------------------------
+add_subdirectory(CodeBase)
+

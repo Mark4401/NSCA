@@ -15,7 +15,7 @@ set(LIBRARY_HDRS
 build_and_export_library(NSCA
   OUTPUT_DIR                NSCA_Lib
   BUILD_DESTINATION_PATH    ${GLOBAL_OUTPUT_DIR}
-  VERSION                   0.2.1
+  VERSION                   0.3.3
   EXPORT_FLAG               NSCA_EXPORTS
   SOURCES                   ${LIBRARY_SRCS}
   HEADERS                   ${LIBRARY_HDRS}
