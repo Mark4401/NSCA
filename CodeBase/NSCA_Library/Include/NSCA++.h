@@ -1,6 +1,7 @@
-#ifndef NSCA_PLUS_PLUS_H
-#define NSCA_PLUS_PLUS_H
+#ifndef NSCA_PLUS_H
+#define NSCA_PLUS_H
 #include "NSCA.h"
+
 
 namespace NSCA
 {

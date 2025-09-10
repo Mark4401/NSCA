@@ -8,15 +8,17 @@
 #endif
 
 
+
 #ifdef __cplusplus
-extern "C" {
-#endif
+extern "C" 
+{
+#endif // __cplusplus
 
 	typedef struct __UNIVERSAL_MEMORY__ UNIVERSAL_MEMORY;
 	typedef struct __WINDOW__			WINDOW;
 
-#define SYSTEM_MEMORY 1;
-#define WINDOW_MEMORY 2;
+	#define SYSTEM_MEMORY 1;
+	#define WINDOW_MEMORY 2;
 
 
 	_NSCA_ WINDOW* Create_Window(int Height, int Width, const wchar_t* App_title, bool Dark_title_bar);
@@ -25,10 +27,11 @@ extern "C" {
 	_NSCA_ bool System_Events_Queue(bool Active_state);
 
 	_NSCA_ void System_Info();
+
+	typedef struct __BINARY_FILE_DATA__ NSCA_BINARY_CREATE;
+
 #ifdef __cplusplus
 }
 #endif // __cplusplus
-
-
 
 #endif // DX11_MAIN_H

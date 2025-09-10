@@ -27,6 +27,8 @@ struct __WINDOW__
 	bool Dark_title_Bar;
 };
 
+
+
 // Global pointer to track current window
 static WINDOW* g_mainWindow = nullptr;
 // Global flag to track if class has been registered
