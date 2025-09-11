@@ -31,14 +31,6 @@ else()
     set(NSCA_PREFIX "${NSCA_BUILD_ROOT}/Release")
 endif()
 
-
-# ------------------------
-# CMake prefix paths for find_package()
-# ------------------------
-list(APPEND CMAKE_PREFIX_PATH
-    ""
-)
-
 # ------------------------
 # Add subdirectories
 # ------------------------
