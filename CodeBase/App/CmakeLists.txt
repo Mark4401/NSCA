@@ -4,7 +4,7 @@ project(NSCA_app VERSION 0.3 LANGUAGES C CXX)
 # Add NSCA prefix to CMAKE_PREFIX_PATH (already determined in root)
 list(APPEND CMAKE_PREFIX_PATH "${NSCA_PREFIX}")
 
-find_package(NSCA 0.3.3 REQUIRED)
+find_package(NSCA 0.3.3.910 REQUIRED)
 
 # ------------------------
 # Sources and headers
@@ -32,7 +32,7 @@ App_builder(${PROJECT_NAME}
     HEADERS                     ${APP_HDRS}
     PUBLIC_INCLUDES             "${CMAKE_CURRENT_SOURCE_DIR}/Include"
     PRIVATE_INCLUDES            "${CMAKE_CURRENT_SOURCE_DIR}/Internal"
-    LINK_LIBS                   ws2_32 NSCA
+    LINK_LIBS                   ws2_32 NSCA::NSCA
 )
 
 # ------------------------

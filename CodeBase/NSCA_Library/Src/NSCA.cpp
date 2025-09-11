@@ -27,7 +27,20 @@ struct __WINDOW__
 	bool Dark_title_Bar;
 };
 
+struct KeyBaord_Data
+{
+	__SYSTEM_DATA__		Data;
+	int32_u				Key_Code;
+	bool				Key_Cown;
+};
 
+struct Mouse_Data
+{
+	__SYSTEM_DATA__		Data;
+	int					X, Y;
+	bool				Left_Down;
+	bool				Right_Down;
+};
 
 // Global pointer to track current window
 static WINDOW* g_mainWindow = nullptr;
@@ -77,6 +90,88 @@ void NSCA_BlackTitleBar(HWND Window_handle)
 	ShowWindow(Window_handle, SW_SHOW);
 }
 
+
+static NSCA_Signal_Type TranslateMessageType(UINT Message)
+{
+	switch (Message) {
+	case WM_QUIT:        return NSCA_SIGNAL_QUIT;
+	case WM_KEYDOWN:     return NSCA_SIGNAL_KEYDOWN;
+	case WM_KEYUP:       return NSCA_SIGNAL_KEYUP;
+	case WM_MOUSEMOVE:   return NSCA_SIGNAL_MOUSEMOVE;
+	case WM_LBUTTONDOWN: return NSCA_SIGNAL_MOUSEDOWN;
+	case WM_LBUTTONUP:   return NSCA_SIGNAL_MOUSEUP;
+	default:             return NSCA_SIGNAL_NONE;
+	}
+}
+
+
+NSCA_Signal_Stream* NSCA_Get_Signal()
+{
+	NSCA_Signal_Stream* stream = new NSCA_Signal_Stream();
+	stream->buffer = nullptr;
+	stream->count = 0;
+	stream->index = 0;
+
+	__SYSTEM_DATA__* tempBuffer = nullptr;
+	int tempCount = 0;
+
+	MSG Message;
+	while (PeekMessageW(&Message, 0, 0, 0, PM_REMOVE))
+	{
+
+		__SYSTEM_DATA__* newBuffer = new __SYSTEM_DATA__[tempCount + 1];
+		for (int i = 0; i < tempCount; ++i)
+			newBuffer[i] = tempBuffer[i];
+
+		delete[] tempBuffer;
+		tempBuffer = newBuffer;
+
+		// Store current message
+		tempBuffer[tempCount].Message = Message.message;
+		tempBuffer[tempCount].WParam = Message.wParam;
+		tempBuffer[tempCount].LParam = Message.lParam;
+
+		tempCount++;
+
+		TranslateMessage(&Message);
+		DispatchMessageW(&Message);
+	}
+
+	stream->buffer = tempBuffer;
+	stream->count = tempCount;
+	stream->index = 0;
+
+	return stream;
+}
+
+void NSCA_Release_Signals(NSCA_Signal_Stream* stream)
+{
+	if (!stream) return;
+
+	if (stream->buffer) {
+		delete[] stream->buffer;
+		stream->buffer = nullptr;
+	}
+
+	delete stream;
+}
+
+int NSCA_Stream_Next_Signal(NSCA_Signal_Stream* stream, NSCA_Signal_Type* outType)
+{
+	if (!stream || !outType || stream->index >= stream->count)
+		return 0;
+
+	__SYSTEM_DATA__ sysData = stream->buffer[stream->index++];
+	*outType = TranslateMessageType(sysData.Message);
+
+	return 1;
+}
+
+int NSCA_Stream_Count(NSCA_Signal_Stream* stream)
+{
+	if (!stream) return 0;
+	return stream->count;
+}
 
 WINDOW* Create_Window(int Height, int Width, const wchar_t* App_title, bool Dark_title_bar)
 {
@@ -158,29 +253,43 @@ void Delete_User_defined_Window(WINDOW* window)
 	delete window; // free heap memory
 }
 
-
-bool System_Events_Queue(bool Active_state)
-{
-	bool Running = Active_state;
-	MSG MessageLoop = { };
-
-	while (PeekMessageW(&MessageLoop, 0, 0, 0, PM_REMOVE))
-	{
-		if (MessageLoop.message == WM_QUIT)
-		{
-			Running = false;
-
-			break;
-		}
-
-		TranslateMessage(&MessageLoop); // Keyboard message
-		DispatchMessageW(&MessageLoop); // Window Handle 
-	}
-
-	std::cout << "System Queue Empty Or Processed All messages!\n";
-
-	return Running;
-}
+//bool System_Events_Queue(bool Active_state, SYSTEM_DATA* Sys_Data)
+//{
+//	bool Running = Active_state;
+//	MSG MessageLoop = { };
+//	
+//	SYSTEM_DATA Internal_Data = { };
+//
+//	while (PeekMessageW(&MessageLoop, 0, 0, 0, PM_REMOVE))
+//	{
+//		if (MessageLoop.message == WM_QUIT)
+//		{
+//			Running = false;
+//
+//			break;
+//		}
+//
+//		TranslateMessage(&MessageLoop); // Keyboard message
+//		DispatchMessageW(&MessageLoop); // Window Handle 
+//
+//		Internal_Data.Message = MessageLoop.message;
+//		Internal_Data.WParam = MessageLoop.wParam;
+//		Internal_Data.LParam = MessageLoop.lParam;
+//	}
+//
+//	if (Sys_Data)
+//	{
+//		Sys_Data->Message = Internal_Data.Message;
+//		Sys_Data->LParam = Internal_Data.LParam;
+//		Sys_Data->WParam = Internal_Data.WParam;
+//
+//		return Running;
+//	}
+//
+//	std::cout << "System Queue Empty Or Processed All messages!\n";
+//
+//	return Running;
+//}
 
 
 void System_Info()
