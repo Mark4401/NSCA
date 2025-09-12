@@ -52,21 +52,7 @@ typedef unsigned long long int64_u;
 
 #include <string>
 #include <iostream>
-#include <Windows.h>
 
-typedef struct __SYSTEM_DATA__
-{
-	UINT    Message;
-	WPARAM  WParam;
-	LPARAM  LParam;
-} __SYSTEM_DATA__;
-
-struct NSCA_Signal_Stream
-{
-	__SYSTEM_DATA__* buffer;
-	int count;
-	int index;
-};
 // Enable Unicode for Win32 API
 #ifndef UNICODE
 #define UNICODE

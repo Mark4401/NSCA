@@ -11,38 +11,26 @@ int main(int argc, char* argv[])
 {
     WINDOW* Display = Create_Window(1280, 720, L"NSCA -> Nodal System Components API", true);
 
-    int running = 1;
+    Signal_Type Type;
 
-    int totalMessagesCaptured = 0;
-
-
-    while (running)
+    while (Event_Process(true, &Type))
     {
-        NSCA_Signal_Stream* stream = NSCA_Get_Signal();
-        NSCA_Signal_Type type;
-
-        while (NSCA_Stream_Next_Signal(stream, &type))
+        switch (Type)
         {
-            switch (type)
-            {
-            case NSCA_SIGNAL_QUIT:        running = 0; break;
-            case NSCA_SIGNAL_KEYDOWN:     cout << "Key pressed\n"; break;
-
-            case NSCA_SIGNAL_KEYUP:       cout << "Key released\n"; break;
-            case NSCA_SIGNAL_MOUSEMOVE:   cout << "Mouse moved\n"; break;
-
-            case NSCA_SIGNAL_MOUSEDOWN:   cout << "Mouse button down\n"; break;
-            case NSCA_SIGNAL_MOUSEUP:     cout << "Mouse button up\n"; break;
-            default:                      break;
-            }
+            case NSCA_SIGNAL_QUIT:              cout << "Quit signal received\n"; break;
+            case NSCA_SIGNAL_KEYDOWN:           cout << "Key pressed\n"; break;
+            case NSCA_SIGNAL_KEYUP:             cout << "Key released\n"; break;
+            case NSCA_SIGNAL_MOUSEMOVE:         cout << "Mouse moved\n"; break;
+            case NSCA_SIGNAL_Left_MOUSEDOWN:    cout << "Mouse left button down\n"; break;
+            case NSCA_SIGNAL_Left_MOUSEUP:      cout << "Mouse left button up\n"; break;
+            default:                            break;
         }
-
-        totalMessagesCaptured += NSCA_Stream_Count(stream);
-
-        //NSCA_Release_Signals(stream);
     }
 
-    cout << "Total messages captured during the app up-time: " << totalMessagesCaptured << "\n";
+    if (Type == NSCA_SIGNAL_QUIT)
+    {
+        cout << "Perform cleanup...\n";
+    }
 
     Delete_User_defined_Window(Display);
 
